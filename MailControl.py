@@ -5,12 +5,12 @@ import smtplib
 
 names = ['Ready', 'Set', 'Go']
 
-def sendWarning(umbralSuperado, variableObservada):
+def sendWarning(umbralSuperado, variableObservada, to):
 	msg = MIMEMultipart()
 
 	password = '2017630191'
 	msg['From'] = 'saulcabrera.zk@gmail.com'
-	msg['To'] = 'max.zkp@gmail.com'
+	msg['To'] = to
 	
 	if umbralSuperado == 0:
 		msg['Subject'] = f'Uso de {variableObservada} mas alto de lo normal - Practica 2'

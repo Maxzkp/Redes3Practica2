@@ -23,7 +23,7 @@ OIDs = ['1.3.6.1.2.1.25.3.3.1.2.196608',
 		'1.3.6.1.2.1.25.2.3.1.6.7']
 
 umbral = [[40, 70, 85],
-		  [68, 75, 90],
+		  [67, 75, 90],
 		  [50, 70, 80]]
 
 msgcooldown = [0, 0, 0]
@@ -35,7 +35,7 @@ sinfo = [int(monitor.snmpConsult(monitor.hosts[0], oid)) for oid in SOIDs]
 #CPU	0
 #STG	1
 #RAM	2
-watching = 0
+watching = 1
 names = ['CPU', 'STG', 'RAM']
 while 1:
 
@@ -56,17 +56,20 @@ while 1:
 	if info[watching] > umbral[watching][2] and msgcooldown[2] == 0:
 		print('Go')
 		createRRD.graph(names[watching], umbral[watching])
-		MailControl.sendWarning(2, names[watching])
+		MailControl.sendWarning(2, names[watching], 'tanibet.escom@gmail.com')
+		MailControl.sendWarning(2, names[watching], 'max.zkp@gmail.com')
 		msgcooldown[2] = stdcd
 	elif info[watching] > umbral[watching][1] and info[watching] < umbral[watching][2] and msgcooldown[1] == 0:
 		print('Set')
 		createRRD.graph(names[watching], umbral[watching])
-		MailControl.sendWarning(1, names[watching])
+		MailControl.sendWarning(1, names[watching], 'tanibet.escom@gmail.com')
+		MailControl.sendWarning(1, names[watching], 'max.zkp@gmail.com')
 		msgcooldown[1] = stdcd
 	elif info[watching] > umbral[watching][0] and info[watching] < umbral[watching][1] and msgcooldown[0] == 0:
 		print('Ready')
 		createRRD.graph(names[watching], umbral[watching])
-		MailControl.sendWarning(0, names[watching])
+		MailControl.sendWarning(0, names[watching], 'tanibet.escom@gmail.com')
+		MailControl.sendWarning(0, names[watching], 'max.zkp@gmail.com')
 		msgcooldown[0] = stdcd
 
 	if msgcooldown[0] > 0:
